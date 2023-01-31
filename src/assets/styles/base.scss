@@ -1,0 +1,22 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+button {
+  background-color: unset;
+  border: unset;
+  padding: 0;
+  cursor: pointer;
+}
+
+body {
+  font-family: $ff-default;
+  color: $color-default-black;
+  min-height: 100vh;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
