@@ -3,22 +3,22 @@
     <Button @click="$emit('changeActive')" class="list-item__toggle">
       <IconArrow />
     </Button>
-    <p class="list-item__name">{{ name }}</p>
-    <ul v-if="statuses" class="list-item__statuses">
-      <li v-for="status in statuses" class="list-item__status" :class="[status ? `list-item__status--${status}` : '']" :key="status"></li>
+    <p class="list-item__name">{{ item.name }}</p>
+    <ul v-if="item.statuses" class="list-item__statuses">
+      <li v-for="status in item.statuses" class="list-item__status" :class="[status ? `list-item__status--${status}` : '']" :key="status"></li>
     </ul>
-    <p v-if="warning" class="list-item__warning">{{ warning }}</p>
-    <p v-if="description" class="list-item__description">{{ description }}</p>
-    <ListItemControls />
+    <p v-if="item.warning" class="list-item__warning">{{ item.warning }}</p>
+    <p v-if="item.description" class="list-item__description">{{ item.description }}</p>
+    <ListItemControls @deleteItem="deleteItem" />
   </div>
   <li v-else class="list-item">
-    <p class="list-item__name">{{ name }}</p>
-    <ul v-if="statuses" class="list-item__statuses">
-      <li v-for="status in statuses" class="list-item__status" :class="[status ? `list-item__status--${status}` : '']" :key="status"></li>
+    <p class="list-item__name">{{ item.name }}</p>
+    <ul v-if="item.statuses" class="list-item__statuses">
+      <li v-for="status in item.statuses" class="list-item__status" :class="[status ? `list-item__status--${status}` : '']" :key="status"></li>
     </ul>
-    <p v-if="warning" class="list-item__warning">{{ warning }}</p>
-    <p v-if="description" class="list-item__description">{{ description }}</p>
-    <ListItemControls />
+    <p v-if="item.warning" class="list-item__warning">{{ item.warning }}</p>
+    <p v-if="item.description" class="list-item__description">{{ item.description }}</p>
+    <ListItemControls @deleteItem="deleteItem" />
   </li>
 </template>
 
@@ -26,30 +26,28 @@
 import ListItemControls from './ListItemControls.vue';
 import IconArrow from '../icons/IconArrow.vue';
 import Button from '../ui/Button.vue';
+import { store } from '../../store/store.js'
 
 export default {
   components: {ListItemControls, IconArrow, Button}, 
   props: {
     modification: {
-    type: String,
-    required: false,
-    },
-    name: {
       type: String,
+      required: false,
+    },
+    item: {
+      type: Object,
       required: true,
-      default: 'Элемент списка'
     },
-    statuses: {
-      type: Array,
-      required: false
-    },
-    warning: {
-      type: String,
-      required: false,
-    }, 
-    description: {
-      type: String,
-      required: false,
+  },
+  data() {
+    return {
+      store
+    }
+  },
+  methods: {
+    deleteItem() {
+      this.store.deleteItem(this.item.type, this.item.id)
     },
   }
 }

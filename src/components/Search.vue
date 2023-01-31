@@ -37,10 +37,8 @@
     methods: {
       clearSearch() {
         this.searchValue = '';
-      }
-    },
-    watch: {
-      searchValue() {
+      },
+      updateFilteredLists() {
         let documentsFiltered = this.documents.filter(document => {
           if (document.name.toUpperCase().indexOf(this.searchValue.toUpperCase()) > -1) {
             return true
@@ -75,7 +73,18 @@
 
         this.$emit('documentsFiltered', documentsFiltered)
         this.$emit('documentsCategoriesFiltered', documentsCategoriesFiltered)
+      }
+    },
+    watch: {
+      searchValue() {
+        this.updateFilteredLists()
       },
+      documents() {
+        this.updateFilteredLists()
+      },
+      documentsCategories() {
+        this.updateFilteredLists()
+      }
     }
   }
 </script>

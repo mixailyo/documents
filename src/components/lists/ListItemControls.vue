@@ -6,7 +6,7 @@
       </button>
     </li>
     <li class="list-item__control">
-      <button class="list-item__control-btn" type="button">
+      <button @click="$emit('deleteItem')" class="list-item__control-btn" type="button">
         <IconDelete />
       </button>
     </li>

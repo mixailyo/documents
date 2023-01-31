@@ -4,6 +4,7 @@ export const store = reactive({
   documents: [
     {
       id: 1,
+      type: "document",
       name: "Паспорт",
       statuses: ["four"],
       warning: "Обязательный",
@@ -12,6 +13,7 @@ export const store = reactive({
     },
     {
       id: 2,
+      type: "document",
       name: "ИНН",
       statuses: [],
       warning: "Обязательный",
@@ -20,6 +22,7 @@ export const store = reactive({
     },
     {
       id: 3,
+      type: "document",
       name: "Тестовое задание кандидата",
       statuses: [],
       warning: "",
@@ -28,6 +31,7 @@ export const store = reactive({
     },
     {
       id: 4,
+      type: "document",
       name: "Трудовой договор",
       statuses: ["five", "six"],
       warning: "",
@@ -36,6 +40,7 @@ export const store = reactive({
     },
     {
       id: 5,
+      type: "document",
       name: "Мед. книжка",
       statuses: [],
       warning: "",
@@ -46,6 +51,7 @@ export const store = reactive({
   documentsCategories: [
     {
       id: 1,
+      type: "category",
       name: "Обязательные для всех",
       statuses: ["one", "two", "three"],
       warning: "",
@@ -53,6 +59,7 @@ export const store = reactive({
     },
     {
       id: 2,
+      type: "category",
       name: "Обязательные для трудоустройства",
       statuses: [],
       warning: "",
@@ -60,6 +67,7 @@ export const store = reactive({
     },
     {
       id: 3,
+      type: "category",
       name: "Специальные",
       statuses: [],
       warning: "",
@@ -116,9 +124,20 @@ export const store = reactive({
       }
     })
   },
+  deleteItem(type, id) {
+    switch(type) {
+      case "document":  
+        this.documents = this.documents.filter(document => document.id !== id)
+        break
+      case "category":
+        this.documentsCategories = this.documentsCategories.filter(category => category.id !== id)
+        this.documents.forEach(document => {if (document.categoryId === id) document.categoryId = null})  
+        break
+    }
+  }
 })
 
-watch([() => store.documentsFiltered, () => store.documentsCategoriesFiltered], () => {store.updateLists()}, {deep: true})
+watch([() => store.documents, () => store.documentsCategories, () => store.documentsFiltered, () => store.documentsCategoriesFiltered], () => {store.updateLists()}, {deep: true})
 watch([() => store.documentsWithCategories], () => {store.updateCategoryId()}, {deep: true})
 watch([() => store.documentsWithoutCategories], () => {store.deleteCategoryId()}, {deep: true})
 

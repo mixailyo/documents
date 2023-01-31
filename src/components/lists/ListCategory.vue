@@ -1,6 +1,6 @@
 <template>
   <li class="list-category" :class="[isActive ? 'list-category--active' : '']">
-    <ListItem :modification="`category-header`" :name="listWithCategory.element.category.name" :statuses="listWithCategory.element.category.statuses" :warning="listWithCategory.element.category.warning" :description="listWithCategory.element.category.description" @changeActive="changeActiveCategory" />
+    <ListItem :modification="`category-header`" :item="listWithCategory.element.category" @changeActive="changeActiveCategory" />
     <Transition name="slide-fade">
       <draggable
         v-if="isActive" 
@@ -14,7 +14,7 @@
         handle=".move-btn"
         >
         <template #item="{element}">
-          <ListItem :name="element.name" :statuses="element.statuses" :warning="element.warning" :description="element.description" />
+          <ListItem :item="element" />
         </template>
       </draggable>
     </Transition>

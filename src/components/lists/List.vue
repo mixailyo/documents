@@ -27,7 +27,7 @@
     handle=".move-btn"
     >
     <template #item="{element}">
-      <ListItem :name="element.name" :statuses="element.statuses" :warning="element.warning" :description="element.description" />
+      <ListItem :item="element" />
     </template>
   </draggable>
 </template>
