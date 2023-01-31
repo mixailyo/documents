@@ -14,6 +14,7 @@
 <script>
   import IconSearch from './icons/IconSearch.vue';
   import IconX from './icons/IconX.vue';
+  import { store } from './../store/store.js'
 
   export default {
     components: {IconSearch, IconX},
@@ -27,12 +28,9 @@
         required: false,
       },
     },
-    mounted() {
-      this.$emit('documentsFiltered', this.documents)
-      this.$emit('documentsCategoriesFiltered', this.documentsCategories)
-    },
     data() {
       return {
+        store,
         searchValue: '',
       }
     },
@@ -82,7 +80,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .search {
     display: flex;
     align-items: center;
@@ -116,15 +114,5 @@
     height: 1px;
     background-color: $color-periwinkle;
     transition: $trans-default;
-  }
-
-  .v-enter-active,
-  .v-leave-active {
-    transition: 0.5s ease;
-  }
-
-  .v-enter-from,
-  .v-leave-to {
-    opacity: 0;
   }
 </style>

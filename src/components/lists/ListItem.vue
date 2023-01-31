@@ -33,24 +33,24 @@ export default {
     modification: {
     type: String,
     required: false,
-  },
-  name: {
-    type: String,
-    required: true,
-    default: 'Элемент списка'
-  },
-  statuses: {
-    type: Array,
-    required: false
-  },
-  warning: {
-    type: String,
-    required: false,
-  }, 
-  description: {
-    type: String,
-    required: false,
-  },
+    },
+    name: {
+      type: String,
+      required: true,
+      default: 'Элемент списка'
+    },
+    statuses: {
+      type: Array,
+      required: false
+    },
+    warning: {
+      type: String,
+      required: false,
+    }, 
+    description: {
+      type: String,
+      required: false,
+    },
   }
 }
 </script>
