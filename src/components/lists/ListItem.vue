@@ -7,18 +7,18 @@
     <ul v-if="item.statuses" class="list-item__statuses">
       <li v-for="status in item.statuses" class="list-item__status" :class="[status ? `list-item__status--${status}` : '']" :key="status"></li>
     </ul>
-    <p v-if="item.warning" class="list-item__warning">{{ item.warning }}</p>
+    <p v-if="item.required" class="list-item__warning">Обязательный</p>
     <p v-if="item.description" class="list-item__description">{{ item.description }}</p>
-    <ListItemControls @deleteItem="deleteItem" />
+    <ListItemControls @editItem="editItem" @deleteItem="deleteItem" />
   </div>
   <li v-else class="list-item">
     <p class="list-item__name">{{ item.name }}</p>
     <ul v-if="item.statuses" class="list-item__statuses">
       <li v-for="status in item.statuses" class="list-item__status" :class="[status ? `list-item__status--${status}` : '']" :key="status"></li>
     </ul>
-    <p v-if="item.warning" class="list-item__warning">{{ item.warning }}</p>
+    <p v-if="item.required" class="list-item__warning">Обязательный</p>
     <p v-if="item.description" class="list-item__description">{{ item.description }}</p>
-    <ListItemControls @deleteItem="deleteItem" />
+    <ListItemControls @editItem="editItem" @deleteItem="deleteItem" />
   </li>
 </template>
 
@@ -49,6 +49,9 @@ export default {
     deleteItem() {
       this.store.deleteItem(this.item.type, this.item.id)
     },
+    editItem() {
+      this.store.initEditItem(this.item.type, this.item.id)
+    }
   }
 }
 </script>

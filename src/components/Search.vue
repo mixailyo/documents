@@ -79,12 +79,18 @@
       searchValue() {
         this.updateFilteredLists()
       },
-      documents() {
-        this.updateFilteredLists()
+      documents: {
+        handler() {
+          this.updateFilteredLists()
+        },
+        deep: true
       },
-      documentsCategories() {
-        this.updateFilteredLists()
-      }
+      documentsCategories: {
+        handler() {
+          this.updateFilteredLists()
+        },
+        deep: true
+      },
     }
   }
 </script>

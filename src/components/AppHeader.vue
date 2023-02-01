@@ -8,13 +8,13 @@
         </Button>
       </li>
       <li class="header__control">
-        <Button>
+        <Button @click="$emit('addNewCategory')">
           <IconPlus />
           <span class="header__control-text">Новый тип</span>
         </Button>
       </li>
       <li class="header__control">
-        <Button>
+        <Button @click="$emit('addNewDocument')">
           <IconPlus />
           <span class="header__control-text">Новый документ</span>
         </Button>

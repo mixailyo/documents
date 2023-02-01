@@ -1,7 +1,7 @@
 <template>
   <ul class="list-item__controls">
     <li class="list-item__control">
-      <button class="list-item__control-btn" type="button">
+      <button @click="$emit('editItem')" class="list-item__control-btn" type="button">
         <IconEdit />
       </button>
     </li>

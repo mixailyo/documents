@@ -7,7 +7,7 @@ export const store = reactive({
       type: "document",
       name: "Паспорт",
       statuses: ["four"],
-      warning: "Обязательный",
+      required: true,
       description: "Для всех",
       categoryId: 1 
     },
@@ -16,7 +16,7 @@ export const store = reactive({
       type: "document",
       name: "ИНН",
       statuses: [],
-      warning: "Обязательный",
+      required: true,
       description: "Для всех",
       categoryId: 1 
     },
@@ -25,7 +25,7 @@ export const store = reactive({
       type: "document",
       name: "Тестовое задание кандидата",
       statuses: [],
-      warning: "",
+      required: false,
       description: "Россия, Белоруссия, Украина, администратор филиала, повар-сушист, повар-пиццмейкер, повар горячего цеха",
       categoryId: null 
     },
@@ -34,7 +34,7 @@ export const store = reactive({
       type: "document",
       name: "Трудовой договор",
       statuses: ["five", "six"],
-      warning: "",
+      required: false,
       description: "",
       categoryId: null 
     },
@@ -43,7 +43,7 @@ export const store = reactive({
       type: "document",
       name: "Мед. книжка",
       statuses: [],
-      warning: "",
+      required: false,
       description: "",
       categoryId: null 
     },
@@ -54,7 +54,7 @@ export const store = reactive({
       type: "category",
       name: "Обязательные для всех",
       statuses: ["one", "two", "three"],
-      warning: "",
+      required: "",
       description: "Документы, обязательные для всех сотрудников без исключения",
     },
     {
@@ -62,7 +62,7 @@ export const store = reactive({
       type: "category",
       name: "Обязательные для трудоустройства",
       statuses: [],
-      warning: "",
+      required: "",
       description: "Документы, без которых невозможно трудоустройство человека на какую бы то ни было должность в компании вне зависимости от граж",
     },
     {
@@ -70,7 +70,7 @@ export const store = reactive({
       type: "category",
       name: "Специальные",
       statuses: [],
-      warning: "",
+      required: "",
       description: "",
     },
   ],
@@ -78,6 +78,8 @@ export const store = reactive({
   documentsCategoriesFiltered: [],
   documentsWithCategories: [],
   documentsWithoutCategories: [],
+  showEditorModal: false,
+  editedItem: {},
 
   updateLists() {
     let array = [];
@@ -132,6 +134,17 @@ export const store = reactive({
       case "category":
         this.documentsCategories = this.documentsCategories.filter(category => category.id !== id)
         this.documents.forEach(document => {if (document.categoryId === id) document.categoryId = null})  
+        break
+    }
+  },
+  initEditItem(type, id) {
+    this.showEditorModal = true
+    switch (type) {
+      case "document":
+        this.editedItem = this.documents.find(document => document.id === id)
+        break
+      case "category":
+        this.editedItem = this.documentsCategories.find(category => category.id === id)
         break
     }
   }
