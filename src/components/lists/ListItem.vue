@@ -5,7 +5,7 @@
     </Button>
     <p class="list-item__name">{{ item.name }}</p>
     <ul v-if="item.statuses" class="list-item__statuses">
-      <li v-for="status in item.statuses" class="list-item__status" :class="[status ? `list-item__status--${status}` : '']" :key="status"></li>
+      <li v-for="status in item.statuses" class="list-item__status" :class="[status ? `list-item__status--${status.value}` : '']" :key="status" :title="status.label"></li>
     </ul>
     <p v-if="item.required" class="list-item__warning">Обязательный</p>
     <p v-if="item.description" class="list-item__description">{{ item.description }}</p>
@@ -14,7 +14,7 @@
   <li v-else class="list-item">
     <p class="list-item__name">{{ item.name }}</p>
     <ul v-if="item.statuses" class="list-item__statuses">
-      <li v-for="status in item.statuses" class="list-item__status" :class="[status ? `list-item__status--${status}` : '']" :key="status"></li>
+      <li v-for="status in item.statuses" class="list-item__status" :class="[status ? `list-item__status--${status.value}` : '']" :key="status" :title="status.label"></li>
     </ul>
     <p v-if="item.required" class="list-item__warning">Обязательный</p>
     <p v-if="item.description" class="list-item__description">{{ item.description }}</p>

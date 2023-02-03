@@ -22,14 +22,7 @@
       type="checkbox"
       name="statuses"
       label="Пометки"
-      :options="[
-        {value: 'one', label: 'Пометка #1'},
-        {value: 'two', label: 'Пометка #2'},
-        {value: 'three', label: 'Пометка #3'},
-        {value: 'four', label: 'Пометка #4'},
-        {value: 'five', label: 'Пометка #5'},
-        {value: 'six', label: 'Пометка #6'},
-        ]"
+      :options="statuses"
       :value="editedItem.statuses"
     />
     <FormKit
@@ -60,57 +53,22 @@ export default {
   },
   mounted() {
     this.updateCategories()
+    this.updateStatuses()
   },
   data() {
     return {
       store,
       categories: [],
+      statuses: [],
     }
   },
   methods: {
     submit(data) {
-      this.$emit('submited')
+      data.id = this.editedItem.id || Number(new Date());
+      data.type = this.editedItem.type;
+      this.store.editItem(data);
 
-      switch (this.editedItem.type) {
-        case "document": 
-          let currentDocument = {
-            id: this.editedItem.id || Number(new Date()),
-            type: this.editedItem.type,
-            name: data.name,
-            statuses: data.statuses,
-            required: data.required,
-            description: data.description || "",
-            categoryId: data.categoryId || null
-          }
-
-          let editedDocumentIndex = this.store.documents.findIndex(document => document.id === currentDocument.id)
-
-          if (editedDocumentIndex > -1) {
-            this.store.documents[editedDocumentIndex] = currentDocument
-          } else {
-            this.store.documents.push(currentDocument)
-          }
-
-          break
-
-        case "category":
-          let currentCategory = {
-            id: this.editedItem.id || Number(new Date()),
-            type: this.editedItem.type,
-            name: data.name,
-            statuses: data.statuses,
-            required: data.required,
-            description: data.description || "",
-          }
-
-          let editedCategoryIndex = this.store.documentsCategories.findIndex(category => category.id === currentCategory.id)
-
-          if (editedCategoryIndex > -1) {
-            this.store.documentsCategories[editedCategoryIndex] = currentCategory
-          } else {
-            this.store.documentsCategories.push(currentCategory)
-          }
-      }
+      this.$emit('submited');
     },
     updateCategories() {
       let result = [];
@@ -132,6 +90,9 @@ export default {
       })
 
       this.categories = result
+    },
+    updateStatuses() {
+      this.statuses = Object.values(this.store.getStatuses())
     }
   }
 }

@@ -1,12 +1,21 @@
 import { reactive, watch } from 'vue'
 
+const statuses = {
+  'one': {value: 'one', label: 'Пометка #1'},
+  'two': {value: 'two', label: 'Пометка #2'},
+  'three': {value: 'three', label: 'Пометка #3'},
+  'four': {value: 'four', label: 'Пометка #4'},
+  'five': {value: 'five', label: 'Пометка #5'},
+  'six': {value: 'six', label: 'Пометка #6'},
+}
+
 export const store = reactive({
   documents: [
     {
       id: 1,
       type: "document",
       name: "Паспорт",
-      statuses: ["four"],
+      statuses: [statuses["four"]],
       required: true,
       description: "Для всех",
       categoryId: 1 
@@ -33,7 +42,7 @@ export const store = reactive({
       id: 4,
       type: "document",
       name: "Трудовой договор",
-      statuses: ["five", "six"],
+      statuses: [statuses["five"], statuses["six"]],
       required: false,
       description: "",
       categoryId: null 
@@ -53,7 +62,7 @@ export const store = reactive({
       id: 1,
       type: "category",
       name: "Обязательные для всех",
-      statuses: ["one", "two", "three"],
+      statuses: [statuses["one"], statuses["two"], statuses["three"]],
       required: "",
       description: "Документы, обязательные для всех сотрудников без исключения",
     },
@@ -147,6 +156,49 @@ export const store = reactive({
         this.editedItem = this.documentsCategories.find(category => category.id === id)
         break
     }
+  },
+  editItem(data) {
+    let currentItem = {
+      id: data.id,
+      type: data.type,
+      name: data.name,
+      statuses: [],
+      required: data.required,
+      description: data.description || "",
+    }
+
+    data.statuses.forEach(status => {
+      currentItem.statuses.push(statuses[status])
+    })
+    
+    switch (data.type) {
+      case "document": 
+        currentItem.categoryId = data.categoryId || null
+
+        let editedDocumentIndex = this.documents.findIndex(document => document.id === currentItem.id)
+
+        if (editedDocumentIndex > -1) {
+          this.documents[editedDocumentIndex] = currentItem
+        } else {
+          this.documents.push(currentItem)
+        }
+
+        break
+
+      case "category":
+        let editedCategoryIndex = this.documentsCategories.findIndex(category => category.id === currentItem.id)
+
+        if (editedCategoryIndex > -1) {
+          this.documentsCategories[editedCategoryIndex] = currentItem
+        } else {
+          this.documentsCategories.push(currentItem)
+        }
+
+        break
+    }
+  },
+  getStatuses() {
+    return statuses
   }
 })
 
